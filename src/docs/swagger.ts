@@ -3,7 +3,7 @@ import swaggerJSDoc, { OAS3Definition, OAS3Options } from "swagger-jsdoc";
 const swaggerDefinition: OAS3Definition = {
     openapi: "3.0.0",
     info: {
-        title: "My API Documentation",
+        title: "Users API Documentation",
         version: "1.0.0"
     },
     servers: [
@@ -15,7 +15,7 @@ const swaggerDefinition: OAS3Definition = {
         schemas: {
             user: {
                 type: "object",
-                required: ["name", "lastname", "age", "phone", "email", "address"],
+                required: ["name", "lastname", "age", "phone", "email", "address", "type"],
                 properties: {
                     name: {
                         type: "string"
@@ -33,6 +33,9 @@ const swaggerDefinition: OAS3Definition = {
                         type: "string"
                     },
                     address: {
+                        type: "string"
+                    },
+                    type: {
                         type: "string"
                     }
                 }
