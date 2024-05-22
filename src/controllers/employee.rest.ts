@@ -1,12 +1,12 @@
 import { Request, Response, Router } from "express"
 import { handleHttp } from "../utils/error.handle" 
-import { getUsers, getUser, insertUser, updateUser, deleteUser } from "./user.service";
+import { getEmployees, getEmployee, insertEmployee, updateEmployee, deleteEmployee } from "./employee.service";
 
 const router = Router();
 
 const getAll = async (req: Request, res: Response) => {
     try {
-        const responseItems = await getUsers();
+        const responseItems = await getEmployees();
         res.send(responseItems);
     } catch (e){
         handleHttp(res, 'ERROR_GET_ITEMS');
@@ -16,7 +16,7 @@ const getAll = async (req: Request, res: Response) => {
 const getById = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const responseItem = await getUser(id);
+        const responseItem = await getEmployee(id);
         res.send(responseItem);
     } catch (e){
         handleHttp(res, 'ERROR_GET_ITEM');
@@ -26,7 +26,7 @@ const getById = async (req: Request, res: Response) => {
 const save = async (req: Request, res: Response) => {
     try {
         const { body } = req;
-        const responseItem = await insertUser(body);
+        const responseItem = await insertEmployee(body);
         res.send(responseItem);
     } catch (e){
         handleHttp(res, 'ERROR_SAVE_ITEM', e);
@@ -37,7 +37,7 @@ const updateById = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
         const body = req.body;
-        const response = await updateUser(id, body);
+        const response = await updateEmployee(id, body);
         res.send(response);
     } catch (e){
         handleHttp(res, 'ERROR_UPDATE_ITEM');
@@ -47,7 +47,7 @@ const updateById = async (req: Request, res: Response) => {
 const deleteById = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const response = await deleteUser(id);
+        const response = await deleteEmployee(id);
         res.send(response);
     } catch (e){
         handleHttp(res, 'ERROR_DELETE_ITEM');
@@ -59,85 +59,85 @@ const deleteById = async (req: Request, res: Response) => {
 /**
  * Post track
  * @openapi
- * /users:
+ * /empleados:
  *    get:
  *      tags:
- *        - users
- *      summary: "Get all users"
- *      description: This endpoint returns all users in the collection.
+ *        - empleados
+ *      summary: "Get all employees"
+ *      description: This endpoint returns all employees in the collection.
  *      responses:
  *        '200':
- *          description: Returns all users.
+ *          description: Returns all employees.
  *        '404':
  *          description: Not found.
  *        '500':
  *          description: Internal server error.
  */
-router.get('/users', getAll);
+router.get('/empleados', getAll);
 
 /**
  * Post track
  * @openapi
- * /users/{_id}:
+ * /empleados/{_id}:
  *    get:
  *      tags:
- *        - users
- *      summary: "Find user by id"
- *      description: Returns a single user.
+ *        - empleados
+ *      summary: "Find employee by id"
+ *      description: Returns a single employee.
  *      parameters:
  *          - name: _id
  *            in: path
- *            description: ID of user to return.
+ *            description: ID of employee to return.
  *            required: true
  *            schema:
  *              type: string
  *      responses:
  *        '200':
- *          description: Retorna a single user by id.
+ *          description: Returns a single employee by id.
  *        '404':
  *          description: Not found.
  *        '500':
  *          description: Internal server error.
  */
-router.get('/users/:id', getById);
+router.get('/empleados/:id', getById);
 
 /**
  * Post track
  * @openapi
- * /users:
+ * /empleados:
  *    post:
  *      tags:
- *        - users
- *      summary: "Add a new user to the collection"
- *      description: Add a new user to the db.
+ *        - empleados
+ *      summary: "Add a new employee to the collection"
+ *      description: Add a new employee to the db.
  *      requestBody:
  *          content:
  *            application/json:
  *              schema:
- *                $ref: "#/components/schemas/user"
+ *                $ref: "#/components/schemas/employee"
  *      responses:
  *        '200':
- *          description: User added successful.
+ *          description: employee added successful.
  *        '404':
  *          description: Not found.
  *        '500':
  *          description: Internal server error.
  */
-router.post('/users', save);
+router.post('/empleados', save);
 
 /**
  * Post track
  * @openapi
- * /users/{_id}:
+ * /empleados/{_id}:
  *    put:
  *      tags:
- *        - users
- *      summary: "Update user by id"
- *      description: Update an existing user by id.
+ *        - empleados
+ *      summary: "Update employee by id"
+ *      description: Update an existing employee by id.
  *      parameters:
  *          - name: _id
  *            in: path
- *            description: ID of user to update.
+ *            description: ID of employee to update.
  *            required: true
  *            schema:
  *              type: string
@@ -145,41 +145,41 @@ router.post('/users', save);
  *          content:
  *            application/json:
  *              schema:
- *                $ref: "#/components/schemas/user"
+ *                $ref: "#/components/schemas/employee"
  *      responses:
  *        '200':
- *          description: User updated successful.
+ *          description: employee updated successful.
  *        '404':
  *          description: Not found.
  *        '500':
  *          description: Internal server error.
  */
-router.put('/users/:id', updateById);
+router.put('/empleados/:id', updateById);
 
 /**
  * Post track
  * @openapi
- * /users/{_id}:
+ * /empleados/{_id}:
  *    delete:
  *      tags:
- *        - users
- *      summary: "Delete user by id"
- *      description: Delete an existing user by id.
+ *        - empleados
+ *      summary: "Delete employee by id"
+ *      description: Delete an existing employee by id.
  *      parameters:
  *          - name: _id
  *            in: path
- *            description: ID of user to delete.
+ *            description: ID of employee to delete.
  *            required: true
  *            schema:
  *              type: string
  *      responses:
  *        '200':
- *          description: User deleted successful.
+ *          description: employee deleted successful.
  *        '404':
  *          description: Not found.
  *        '500':
  *          description: Internal server error.
  */
-router.delete('/users/:id', deleteById);
+router.delete('/empleados/:id', deleteById);
 
 export { router, getById, getAll, save, updateById, deleteById };

@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import swaggerSetup from "./docs/swagger";
-import { router } from "./controllers/user.rest";
+import { router } from "./controllers/employee.rest";
 import db from "./config/mongo";
 
 //Config
