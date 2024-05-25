@@ -9,6 +9,7 @@ const getAll = async (req: Request, res: Response) => {
         const responseItems = await getEmployees();
         res.send(responseItems);
     } catch (e){
+        res.status(500);
         handleHttp(res, 'ERROR_GET_ITEMS');
     }
 };
@@ -19,6 +20,7 @@ const getById = async (req: Request, res: Response) => {
         const responseItem = await getEmployee(id);
         res.send(responseItem);
     } catch (e){
+        res.status(500);
         handleHttp(res, 'ERROR_GET_ITEM');
     }
 };
@@ -27,8 +29,9 @@ const save = async (req: Request, res: Response) => {
     try {
         const { body } = req;
         const responseItem = await insertEmployee(body);
-        res.send(responseItem);
+        res.status(201).send(responseItem);
     } catch (e){
+        res.status(500);
         handleHttp(res, 'ERROR_SAVE_ITEM', e);
     }
 };
@@ -40,6 +43,7 @@ const updateById = async (req: Request, res: Response) => {
         const response = await updateEmployee(id, body);
         res.send(response);
     } catch (e){
+        res.status(500);
         handleHttp(res, 'ERROR_UPDATE_ITEM');
     }
 };
@@ -50,6 +54,7 @@ const deleteById = async (req: Request, res: Response) => {
         const response = await deleteEmployee(id);
         res.send(response);
     } catch (e){
+        res.status(500);
         handleHttp(res, 'ERROR_DELETE_ITEM');
     }
 };
@@ -147,7 +152,7 @@ router.post('/empleados', save);
  *              schema:
  *                $ref: "#/components/schemas/employee"
  *      responses:
- *        '200':
+ *        '201':
  *          description: employee updated successful.
  *        '404':
  *          description: Not found.
